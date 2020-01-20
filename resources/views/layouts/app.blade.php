@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.3.0/css/flag-icon.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css"/>
     <link rel="stylesheet" href="{{asset('css/custom-data-table.css')}}">
+    <link rel="stylesheet" href="{{asset('css/styles.css')}}">
 </head>
 <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
 <header class="app-header navbar">
@@ -23,10 +24,13 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <a class="navbar-brand" href="#">
-        <img class="navbar-brand-full" src="http://infyom.com/images/logo/blue_logo_150x150.jpg" width="30" height="30"
-             alt="InfyOm Logo">
-        <img class="navbar-brand-minimized" src="http://infyom.com/images/logo/blue_logo_150x150.jpg" width="30"
-             height="30" alt="Infyom Logo">
+        <span class="navbar-brand-full">
+            <div class="d-flex">
+            <img src="{{ asset('/image/logo/indomaret.jpg') }}" width="30" height="30" alt="Indomaret Logo">
+            <h5 class="logo-text">Indomaret</h5>
+            </div>
+        </span>
+        <img class="navbar-brand-minimized" src="{{ asset('/image/logo/indomaret.jpg') }}" width="30" height="30" alt="Indomaret Logo">
     </a>
     <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
         <span class="navbar-toggler-icon"></span>
@@ -82,13 +86,12 @@
 </div>
 <footer class="app-footer">
     <div>
-        <a href="https://infyom.com">InfyOm </a>
-        <span>&copy; 2019 InfyOmLabs.</span>
+        <span>&copy; 2019 <a href="https://github.com/RindangRamadhan">RindangRamadhan </a></span>
     </div>
-    <div class="ml-auto">
+    <!-- <div class="ml-auto">
         <span>Powered by</span>
         <a href="https://coreui.io">CoreUI</a>
-    </div>
+    </div> -->
 </footer>
 </body>
 <!-- jQuery 3.1.1 -->
