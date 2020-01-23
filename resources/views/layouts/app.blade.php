@@ -15,15 +15,14 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.3.0/css/flag-icon.min.css">
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="{{asset('css/custom-data-table.css')}}">
   <link rel="stylesheet" href="{{asset('css/styles.css')}}">
   <link rel="shortcut icon" type="image/png" href="{{ asset('/image/logo/indomaret.jpg') }}"/>
 
 </head>
 <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
-@php
-  $url = explode("/", Request::path());
-@endphp
 <header class="app-header navbar">
   <button class="navbar-toggler sidebar-toggler d-lg-none mr-auto" type="button" data-toggle="sidebar-show">
     <span class="navbar-toggler-icon"></span>
@@ -42,34 +41,14 @@
   </button>
 
   <ul class="nav navbar-nav ml-auto">
-    <li class="nav-item d-md-down-none">
-      <a class="nav-link" href="#">
-        <i class="icon-bell"></i>
-        <span class="badge badge-pill badge-danger">5</span>
-      </a>
-    </li>
     <li class="nav-item dropdown">
       <a class="nav-link" style="margin-right: 10px" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-        {!! Auth::user()->name !!}
+        <i class="icon-user"></i> {!! Auth::user()->name !!}
       </a>
       <div class="dropdown-menu dropdown-menu-right">
-        <div class="dropdown-header text-center">
-          <strong>Account</strong>
-        </div>
         <a class="dropdown-item" href="#">
-          <i class="fa fa-envelope-o"></i> Messages
-          <span class="badge badge-success">42</span>
+          <i class="fa fa-user"></i> Profile
         </a>
-        <div class="dropdown-header text-center">
-          <strong>Settings</strong>
-        </div>
-        <a class="dropdown-item" href="#">
-          <i class="fa fa-user"></i> Profile</a>
-        <a class="dropdown-item" href="#">
-          <i class="fa fa-wrench"></i> Settings</a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#">
-          <i class="fa fa-shield"></i> Lock Account</a>
         <a class="dropdown-item" href="{!! url('/logout') !!}" class="btn btn-default btn-flat" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
           <i class="fa fa-lock"></i>Logout
         </a>
@@ -102,12 +81,36 @@
 </footer>
 </body>
 <!-- jQuery 3.1.1 -->
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
 <script src="https://unpkg.com/@coreui/coreui/dist/js/coreui.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('#example').DataTable();
+
+    // showToast = function(heading, text, icon, loaderBg) {
+    //   'use strict';
+    //   // resetToastPosition();
+    //   $.toast({
+    //     heading: heading,
+    //     text: text,
+    //     showHideTransition: 'slide',
+    //     icon: icon,
+    //     loaderBg: loaderBg,
+    //     position: {
+    //       right: 1,
+    //       top: 60
+    //     },
+    //   })
+    // };
+  });
+</script>
 @yield('scripts')
 
 </html>
