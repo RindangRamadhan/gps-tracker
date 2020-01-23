@@ -8,3 +8,12 @@
 .logo-text {
   margin: 5px 0px 0px 5px;
 }
+
+.app-header .navbar-toggler {
+  min-width: 105px;
+  padding: .25rem 0;
+}
+
+.main .container-fluid {
+  padding: 15px 30px;
+}
