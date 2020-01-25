@@ -4,7 +4,7 @@
   <!-- Breadcrumb-->
   <ol class="breadcrumb">
     <li class="breadcrumb-item">Master Data</li>
-    <li class="breadcrumb-item active">Cars</li>
+    <li class="breadcrumb-item active">Drivers</li>
     <!-- Breadcrumb Menu-->
     <li class="breadcrumb-menu d-md-down-none">
       <div class="btn-group" role="group" aria-label="Button group">
@@ -25,20 +25,24 @@
         <thead>
             <tr>
               <th>Name</th>
-              <th>Plate Number</th>
+              <th>Email</th>
+              <th>Phone Number</th>
+              <th>NIK</th>
               <th>Action</th>
             </tr>
         </thead>
         <tbody>
-          @foreach($cars as $car)
+          @foreach($drivers as $driver)
             <tr>
-              <td>{{ $car->name }}</td>
-              <td>{{ $car->plate_number }}</td>
+              <td>{{ $driver->name }}</td>
+              <td>{{ $driver->user->email }}</td>
+              <td>{{ $driver->no_telp }}</td>
+              <td>{{ $driver->nik }}</td>
               <td style="text-align: center;">
-                <a class="btn btn-success" href="{{ url('/cars/' . $car->id . '/edit') }}">
-                  <i class="icon-pencil"></i>
+                <a class="btn btn-success" href="{{ url('/drivers/' . $driver->id . '/edit') }}">
+                  <i class="icon-pencil"></i> 
                 </a>
-                <a class="btn btn-danger btn-delete" href="JavaScript:void(0);" data-id="{{$car->id}}">
+                <a class="btn btn-danger btn-delete" href="JavaScript:void(0);" data-id="{{$driver->id}}">
                   <i class="icon-trash"></i>
                 </a>
                 </a>
@@ -60,7 +64,7 @@
         <i class="icon-refresh"></i>
     </button>
     <a 
-      href="{{ url('/cars/create') }}" 
+      href="{{ url('/drivers/create') }}" 
       class="btn btn-icon btn-info">
         <i class="icon-plus"></i>
     </a>
@@ -135,19 +139,15 @@
       }
     });
     $.ajax({
-      url: "cars/"+id,
+      url: "drivers/"+id,
       type: 'DELETE',
       dataType: "JSON",
-      success: function (resp){
-        if(resp.status == 200) {
-          showToast(heading, text, icon, loaderBg)
+      success: function (resp){        
+        showToast(heading, text, icon, loaderBg)
 
-          setTimeout(() => {
-            location.reload()
-          }, 500);
-        } else {
-          showToast("Failed", "Can't delete, data has been used", "warning", "#bf2400")
-        }
+        setTimeout(() => {
+          location.reload()
+        }, 500);
       },
       error: function(xhr) {
         console.log(xhr.responseText);

@@ -19,6 +19,7 @@ class CreateCarsTable extends Migration
             $table->string('plate_number');
             $table->integer('curr_km')->nullable();
             $table->integer('last_km')->nullable();
+            $table->integer('is_used')->nullable()->deafult(0);
             $table->timestamps();
         });
     }

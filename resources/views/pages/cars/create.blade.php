@@ -3,11 +3,9 @@
 @section('content')
   <!-- Breadcrumb-->
   <ol class="breadcrumb">
+    <li class="breadcrumb-item">Master Data</li>
     <li class="breadcrumb-item">
-      <a style="color: #73818f" href="/home"> Dashboard </a>
-    </li>
-    <li class="breadcrumb-item">
-      <a style="color: #73818f" href="/cars"> Cars </a>
+      <a style="color: #262a2e" href="/cars"> Cars </a>
     </li>
     <li class="breadcrumb-item active">Create</li>
     <!-- Breadcrumb Menu-->

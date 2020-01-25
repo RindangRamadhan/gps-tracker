@@ -25,7 +25,7 @@
     @if(isset($car))
     <input type="text" class="form-control form-control-capitalize @error('plate_number') is-invalid @enderror" placeholder="Plate Number" name="plate_number" value="{{ $car->plate_number }}" autocomplete="off" autofocus>
     @else
-    <input type="text" class="form-control form-control-capitalize @error('plate_number') is-invalid @enderror" placeholder="Plate Number" name="plate_number" value="{{ old('name') }}" autocomplete="off" autofocus>
+    <input type="text" class="form-control form-control-capitalize @error('plate_number') is-invalid @enderror" placeholder="Plate Number" name="plate_number" value="{{ old('plate_number') }}" autocomplete="off" autofocus>
     @endif
     <!-- Error Message -->
     @error('plate_number')

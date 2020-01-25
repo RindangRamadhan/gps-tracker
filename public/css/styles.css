@@ -55,3 +55,17 @@
 .jq-icon-success {
   background-color: #28a745;
 }
+.jq-toast-single {
+  background-color: #dc3545;
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance:textfield;
+}

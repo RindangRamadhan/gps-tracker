@@ -5,9 +5,9 @@
   <ol class="breadcrumb">
     <li class="breadcrumb-item">Master Data</li>
     <li class="breadcrumb-item">
-      <a style="color: #262a2e" href="/cars"> Cars </a>
+      <a style="color: #262a2e" href="/drivers"> Drivers </a>
     </li>
-    <li class="breadcrumb-item active">Edit</li>
+    <li class="breadcrumb-item active">Create</li>
     <!-- Breadcrumb Menu-->
     <li class="breadcrumb-menu d-md-down-none">
       <div class="btn-group" role="group" aria-label="Button group">
@@ -24,17 +24,16 @@
   
   <div class="card">
     <div class="card-header">
-      <strong>Car Form</strong>
+      <strong>Driver Form</strong>
     </div>
     <div class="card-body">            
-      <form action="{{ url('/cars', $car->id) }}" method="post" enctype="multipart/form-data">
+      <form action="{{ url('/drivers') }}" method="post" enctype="multipart/form-data">
         @csrf
-        {{ method_field('PATCH') }}
-        @include('pages.cars.form')
+        @include('pages.drivers.form')
 
         <div class="footer-buttons">
           <a 
-            href="{{ url('/cars') }}" 
+            href="{{ url('/drivers') }}" 
             class="btn btn-icon btn-warning">
               <i class="icon-arrow-left-circle"></i>
           </a>
