@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>{{config('app.name')}}</title>
   <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <!-- Bootstrap 4.1.1 -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css">
@@ -17,6 +18,7 @@
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="{{asset('/js/jquery-toast-plugin/jquery.toast.min.css')}}">
   <link rel="stylesheet" href="{{asset('css/custom-data-table.css')}}">
   <link rel="stylesheet" href="{{asset('css/styles.css')}}">
   <link rel="shortcut icon" type="image/png" href="{{ asset('/image/logo/indomaret.jpg') }}"/>
@@ -90,25 +92,26 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
 <script src="https://unpkg.com/@coreui/coreui/dist/js/coreui.min.js"></script>
+<script src="{{asset('/js/jquery-toast-plugin/jquery.toast.min.js')}}"></script>
 <script>
   $(document).ready(function() {
     $('#example').DataTable();
 
-    // showToast = function(heading, text, icon, loaderBg) {
-    //   'use strict';
-    //   // resetToastPosition();
-    //   $.toast({
-    //     heading: heading,
-    //     text: text,
-    //     showHideTransition: 'slide',
-    //     icon: icon,
-    //     loaderBg: loaderBg,
-    //     position: {
-    //       right: 1,
-    //       top: 60
-    //     },
-    //   })
-    // };
+    showToast = function(heading, text, icon, loaderBg) {
+      'use strict';
+      // resetToastPosition();
+      $.toast({
+        heading: heading,
+        text: text,
+        showHideTransition: 'slide',
+        icon: icon,
+        loaderBg: loaderBg,
+        position: {
+          right: 1,
+          top: 60
+        },
+      })
+    };
   });
 </script>
 @yield('scripts')

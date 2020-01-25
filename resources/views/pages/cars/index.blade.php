@@ -37,10 +37,10 @@
               <td>{{ $car->name }}</td>
               <td>{{ $car->plate_number }}</td>
               <td style="text-align: center;">
-                <a class="btn btn-success" href="#">
+                <a class="btn btn-success" href="{{ url('/cars/' . $car->id . '/edit') }}">
                   <i class="icon-pencil"></i>
                 </a>
-                <a class="btn btn-danger" href="#">
+                <a class="btn btn-danger btn-delete" href="JavaScript:void(0);" data-id="{{$car->id}}">
                   <i class="icon-trash"></i>
                 </a>
                 </a>
@@ -67,17 +67,40 @@
         <i class="icon-plus"></i>
     </a>
   </div>
+
+  <!-- Modal Delete -->
+  <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalDeleteLabel">Delete Confirmation</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <p style="margin: 0">You Want to Delete ?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Cancel
+          </button>
+          <button type="button" class="btn btn-danger" data-id="" id="btn-confirm">
+            Yes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 @endsection
 
 @section('scripts')
 <script>
   @if (Session::get('status') == 200)
-    $(document).ready(function(){
-      let heading = "@lang('admin.pages.notif.success')"
-      let text = "@lang('admin.pages.notif.msg_success')"
+    $(document).ready(function() {
+      let heading = "Success"
+      let text = "Data has been saved"
       let icon = 'success';
       let loaderBg = '#007d47';
-
+      
       showToast(heading, text, icon, loaderBg)
     });
   @endif
@@ -103,9 +126,8 @@
   })
 
   function deleteProcess(id) {
-    let heading = "@lang('admin.pages.notif.success')"
-    let text = "@lang('admin.pages.notif.msg_delete')"
-    let text_cancel = "@lang('admin.pages.notif.msg_cancel')"
+    let heading = "Success"
+    let text = "Data has been deleted"
     let icon = 'success';
     let loaderBg = '#007d47';
 
@@ -115,19 +137,15 @@
       }
     });
     $.ajax({
-      url: "categories/"+id,
+      url: "cars/"+id,
       type: 'DELETE',
       dataType: "JSON",
-      success: function (resp){
-        if(resp.status == 200) {
-          showToast(heading, text, icon, loaderBg)
+      success: function (resp){        
+        showToast(heading, text, icon, loaderBg)
 
-          setTimeout(() => {
-            location.reload()
-          }, 1000);
-        } else {
-          showToast("@lang('admin.pages.notif.failed')", text_cancel, "warning", "#bf2400")
-        }
+        setTimeout(() => {
+          location.reload()
+        }, 500);
       },
       error: function(xhr) {
         console.log(xhr.responseText);

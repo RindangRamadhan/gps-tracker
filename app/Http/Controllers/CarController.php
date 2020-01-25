@@ -62,7 +62,7 @@ class CarController extends Controller
    * @param  \App\Car  $car
    * @return \Illuminate\Http\Response
    */
-  public function show(Car $car)
+  public function show($id)
   {
       //
   }
@@ -73,9 +73,13 @@ class CarController extends Controller
    * @param  \App\Car  $car
    * @return \Illuminate\Http\Response
    */
-  public function edit(Car $car)
+  public function edit($id)
   {
-      //
+    $car = Car::find($id);
+        
+    return view('pages.cars.edit')->with(compact([
+      'car',
+    ]));
   }
 
   /**
@@ -85,9 +89,21 @@ class CarController extends Controller
    * @param  \App\Car  $car
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, Car $car)
+  public function update(Request $request, $id)
   {
-      //
+    $car = Car::find($id);
+
+    $this->validate($request, [
+      'name' => 'required|unique:cars,name,'. $id,
+      'plate_number' => 'required',
+    ]);
+
+    $car->update([
+      'name' => $request->name,
+      'plate_number' => $request->plate_number,
+    ]);
+
+    return redirect('/cars')->with(['status' => 200]);
   }
 
   /**
@@ -96,8 +112,12 @@ class CarController extends Controller
    * @param  \App\Car  $car
    * @return \Illuminate\Http\Response
    */
-  public function destroy(Car $car)
+  public function destroy($id)
   {
-      //
+    $car = Car::find($id)->delete();
+
+    return response()->json([
+      'status' => 200
+    ]);
   }
 }
