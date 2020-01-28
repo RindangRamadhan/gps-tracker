@@ -12,7 +12,7 @@
     <li class="breadcrumb-menu d-md-down-none">
       <div class="btn-group" role="group" aria-label="Button group">
         <a class="btn" href="/home">
-          <i class="icon-speedometer"></i>
+          <i class="icon-home"></i>
         </a>
         <a style="color: #73818f" href="Javascript:void(0)">/</a>
         <a class="btn" href="Javascript:void(0)">

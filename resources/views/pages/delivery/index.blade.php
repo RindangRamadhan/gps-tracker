@@ -3,17 +3,12 @@
 @section('content')
   <!-- Breadcrumb-->
   <ol class="breadcrumb">
-    <li class="breadcrumb-item">Master Data</li>
-    <li class="breadcrumb-item active">Cars</li>
+    <li class="breadcrumb-item">Delivery</li>
     <!-- Breadcrumb Menu-->
     <li class="breadcrumb-menu d-md-down-none">
       <div class="btn-group" role="group" aria-label="Button group">
-        <a class="btn" href="/home">
-          <i class="icon-home"></i>
-        </a>
-        <a style="color: #73818f" href="Javascript:void(0)">/</a>
         <a class="btn" href="Javascript:void(0)">
-          <i class="icon-grid"></i>
+          <i class="icon-direction"></i>
         </a>
       </div>
     </li>
@@ -24,21 +19,31 @@
       <table id="example" class="table table-sm table-striped" style="width:100%; border: 1px solid #e9ecef;">
         <thead>
             <tr>
-              <th>Name</th>
-              <th>Plate Number</th>
+              <th>SJ Number</th>
+              <th>Driver</th>
+              <th>Car</th>
+              <th>Location</th>
+              <th>Status</th>
               <th>Action</th>
             </tr>
         </thead>
         <tbody>
-          @foreach($cars as $car)
+          @foreach($delivery as $data)
             <tr>
-              <td>{{ $car->name }}</td>
-              <td>{{ $car->plate_number }}</td>
+              <td>{{ $data->sj_number }}</td>
+              <td>{{ $data->driver->name }}</td>
+              <td>{{ $data->car->name }} - {{ $data->car->plate_number }}</td>
+              <td>{{ $data->delivery_location }}</td>
+              @if($data->status == 'On Progress')
+              <td style="color: #ffc107; cursor: pointer" class="btn-update" data-id="{{$data->id}}">{{ $data->status }}</td>
+              @else
+              <td style="color: #007bff;">{{ $data->status }}</td>
+              @endif
               <td style="text-align: center;">
-                <a class="btn btn-success" href="{{ url('/cars/' . $car->id . '/edit') }}">
+                <a class="btn btn-success" href="{{ url('/delivery/' . $data->id . '/edit') }}">
                   <i class="icon-pencil"></i>
                 </a>
-                <a class="btn btn-danger btn-delete" href="JavaScript:void(0);" data-id="{{$car->id}}">
+                <a class="btn btn-danger btn-delete" href="JavaScript:void(0);" data-id="{{$data->id}}">
                   <i class="icon-trash"></i>
                 </a>
                 </a>
@@ -60,10 +65,33 @@
         <i class="icon-refresh"></i>
     </button>
     <a 
-      href="{{ url('/cars/create') }}" 
+      href="{{ url('/delivery/create') }}" 
       class="btn btn-icon btn-info">
         <i class="icon-plus"></i>
     </a>
+  </div>
+
+  <!-- Modal Update -->
+  <div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalUpdateLabel">Update Confirmation</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <input type="number" id="last_km" class="form-control" placeholder="Current Km" autocomplete="off" autofocus>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Cancel
+          </button>
+          <button type="button" class="btn btn-danger" data-id="" id="btn-confirm-update">
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Modal Delete -->
@@ -103,6 +131,31 @@
     });
   @endif
 
+  // Action Update
+  $(document).on('click', '.btn-update', function (e) {
+    e.preventDefault();
+
+    $("#btn-confirm-update").attr("data-id", $(this).attr("data-id"))
+    $("#modalUpdate").modal('show')
+  })
+
+  // Action Confirm Update
+  $(document).on('click', '#btn-confirm-update', function (e) {
+    e.preventDefault();
+    
+    let id = $(this).attr("data-id")
+    let last_km = $("#last_km").val();
+
+    if(last_km == "") {
+      alert("Last KM is Required");
+      $("#last_km").focus();
+    } else {
+      $("#modalUpdate").modal('hide')
+
+      updateProcess(id, last_km)
+    }
+  })
+
   // Action Delete
   $(document).on('click', '.btn-delete', function (e) {
     e.preventDefault();
@@ -135,7 +188,7 @@
       }
     });
     $.ajax({
-      url: "cars/"+id,
+      url: "delivery/"+id,
       type: 'DELETE',
       dataType: "JSON",
       success: function (resp){
@@ -148,6 +201,36 @@
         } else {
           showToast("Failed", "Can't delete, data has been used", "warning", "#bf2400")
         }
+      },
+      error: function(xhr) {
+        console.log(xhr.responseText);
+      }
+    });
+  }
+  
+
+  function updateProcess(id, last_km) {
+    let heading = "Success"
+    let text = "Data has been updated"
+    let icon = 'success';
+    let loaderBg = '#007d47';
+
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+    });
+    $.ajax({
+      url: "delivery/update-status/"+id,
+      type: 'POST',
+      data: {last_km: last_km},
+      dataType: "JSON",
+      success: function (resp){
+        showToast(heading, text, icon, loaderBg)
+
+        setTimeout(() => {
+          location.reload()
+        }, 500);
       },
       error: function(xhr) {
         console.log(xhr.responseText);

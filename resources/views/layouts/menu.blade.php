@@ -4,7 +4,7 @@
 
 <li class="nav-item">
   <a class="nav-link" href="{{ url('home') }}">
-    <i class="nav-icon icon-speedometer"></i> Dashboard
+    <i class="nav-icon icon-home"></i> Dashboard
   </a>
 </li>
 
@@ -25,6 +25,11 @@
         <i class="nav-icon icon-minus" style="font-size: 10px"></i> Users</a>
     </li>
   </ul>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="{{ url('delivery') }}">
+    <i class="nav-icon icon-direction"></i> Delivery
+  </a>
 </li>
 <li class="nav-item">
   <a class="nav-link {{ $url[0] == 'tracking' ? 'active' : '' }}" href="{{ url('tracking') }}">

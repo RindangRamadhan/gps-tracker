@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="{{asset('/js/jquery-toast-plugin/jquery.toast.min.css')}}">
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="{{asset('css/custom-data-table.css')}}">
   <link rel="stylesheet" href="{{asset('css/styles.css')}}">
   <link rel="shortcut icon" type="image/png" href="{{ asset('/image/logo/indomaret.jpg') }}"/>
@@ -93,6 +94,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
 <script src="https://unpkg.com/@coreui/coreui/dist/js/coreui.min.js"></script>
 <script src="{{asset('/js/jquery-toast-plugin/jquery.toast.min.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
 <script>
   $(document).ready(function() {
     $('#example').DataTable();
@@ -112,6 +115,11 @@
         },
       })
     };
+
+    $(".select-tag").select2({
+      tags: true,
+      tokenSeparators: [',', ' ']
+    })
   });
 </script>
 @yield('scripts')

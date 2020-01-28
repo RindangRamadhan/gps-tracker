@@ -22,3 +22,7 @@ Route::get('/home', 'HomeController@index');
 Route::resource('/cars', 'CarController');
 Route::resource('/drivers', 'DriverController');
 Route::resource('/users', 'UserController');
+Route::resource('/delivery', 'DeliveryController');
+Route::resource('/tracking', 'TrackerController');
+
+Route::post('/delivery/update-status/{id}', 'DeliveryController@updateStatus');
