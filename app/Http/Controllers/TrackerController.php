@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Tracker;
+use App\Delivery;
 use Illuminate\Http\Request;
 
 class TrackerController extends Controller
@@ -24,7 +25,13 @@ class TrackerController extends Controller
    */
   public function index()
   {
-    return view('pages.tracking.index');
+    $drivers = Delivery::with('driver')->where('status', 'On Progress')->get();
+
+    return view('pages.tracking.index')->with(
+      compact([
+        'drivers'
+      ])
+    );
   }
 
   /**
@@ -91,5 +98,14 @@ class TrackerController extends Controller
   public function destroy(Tracker $tracker)
   {
       //
+  }
+
+  public function searchDriver($id) {
+    $data = Tracker::where("user_id", $id)->orderBy("created_at", "DESC")->first();
+    
+    return response()->json([
+      'data' => $data,
+      'status' => 200
+    ]);
   }
 }

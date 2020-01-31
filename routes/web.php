@@ -26,3 +26,4 @@ Route::resource('/delivery', 'DeliveryController');
 Route::resource('/tracking', 'TrackerController');
 
 Route::post('/delivery/update-status/{id}', 'DeliveryController@updateStatus');
+Route::get('/tracking/search/{id}', 'TrackerController@searchDriver');
