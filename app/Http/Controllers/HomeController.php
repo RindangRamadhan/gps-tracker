@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Car;
+use App\Driver;
+use App\Delivery;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +26,16 @@ class HomeController extends Controller
    */
   public function index()
   {
-    return view('home');
+    $cars = Car::count();
+    $drivers = Driver::count();
+    $delivery = Delivery::count();
+
+    return view('home')->with(
+      compact([
+        'cars',
+        'drivers',
+        'delivery'
+      ])
+    );
   }
 }

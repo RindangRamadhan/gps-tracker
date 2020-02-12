@@ -45,7 +45,6 @@
             <form method="post" action="{{ url('/login') }}">
               {!! csrf_field() !!}
               <h1>Login</h1>
-              <p class="text-muted">Sign In to your account</p>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   <span class="input-group-text">
@@ -88,10 +87,12 @@
         <div class="card text-white bg-primary py-5 d-md-down-none" style="width:44%">
           <div class="card-body text-center">
             <div>
-              <h2>Sign up</h2>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                incididunt ut labore et dolore magna aliqua.</p>
-                <a class="btn btn-primary active mt-3" href="{{ url('/register') }}">Register Now!</a>
+              <h2>Welcome</h2>
+              <p>
+                Please Login into your account.
+              </p>
+              <br><br>
+              <p>&copy; 2020<p>
             </div>
           </div>
         </div>

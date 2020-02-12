@@ -16,12 +16,12 @@
   <div class="card">
     <div class="card-body">
       <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-3" style="display: none">
           <select id="driver" class="form-control select2" name="driver" required autofocus>
             <option></option>
           </select>
         </div>
-        <div class="col-sm-3" style="padding: 0">
+        <div class="col-sm-3" >
           <button class="btn btn-tumblr" id="btnTracking" type="button">
             <i class="icon-location-pin"></i> Tracking
           </button>
@@ -29,9 +29,15 @@
       </div>
       <br>
 
-      <iframe width="100%" height="300" id="mapEmbed" src="https://maps.google.com/maps?q=&t=&z=15&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
-      </iframe>
-      <div id="mymap" style="height: 400px; display: none"></div>
+      <!-- <iframe 
+        width="100%" 
+        height="300" 
+        id="mapEmbed" 
+        src="https://maps.google.com/maps?q=&t=&z=15&output=embed" 
+        frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
+      >
+      </iframe> -->
+      <div id="mymap" style="height: 400px;"></div>
     </div>
   </div>
   
@@ -80,39 +86,8 @@
       lat: -12.043333,
       lng: -77.028333
     });
-    map.addControl({
-      position: 'top_right',
-      content: 'Geolocate',
-      style: {
-        margin: '5px',
-        padding: '1px 6px',
-        border: 'solid 1px #717B87',
-        background: '#fff'
-      },
-      events: {
-        click: function(){
-          GMaps.geolocate({
-            success: function(position){
-              map.setCenter(position.coords.latitude, position.coords.longitude);
-              map.addMarker({
-                lat: position.coords.latitude,
-                lng: position.coords.longitude,
-                title: "City Name",
-                click: function(e) {
-                  displayLocation(position.coords.latitude,position.coords.longitude)
-                }
-              });
-            },
-            error: function(error){
-              alert('Geolocation failed: ' + error.message);
-            },
-            not_supported: function(){
-              alert("Your browser does not support geolocation");
-            }
-          });
-        }
-      }
-    });
+
+    getCurrentLocation();
   });
 
   $(document).ready(function() {
@@ -121,14 +96,15 @@
         
         drivers.forEach(val => {
           driver.push({
-            id: val.driver_id,
+            id: val.driver.user_id,
             text: `${val.driver.name}`,
           })
         });
 
     $('#driver').select2({
       data: driver,
-      placeholder: 'Select Driver'
+      placeholder: 'Select Driver',
+      allowClear: true
     });
   })
 
@@ -144,12 +120,6 @@
     let text = "Data Found"
     let icon = 'success';
     let loaderBg = '#007d47';
-
-    if(id == "") {
-      alert("Please select driver..");
-      $("#driver").focus()
-      return false;
-    }
     
     $.ajaxSetup({
       headers: {
@@ -157,15 +127,33 @@
       }
     });
     $.ajax({
-      url: "tracking/search/"+id,
+      url: "tracking/search/all",
       type: 'GET',
       dataType: "JSON",
       success: function (resp){
         if(resp.data != null) {
-          const location = JSON.parse(resp.data.location)
           showToast(heading, text, icon, loaderBg)
 
           $("#mapEmbed").attr("src", `https://maps.google.com/maps?q=${location.address}&t=&z=15&output=embed`)
+          
+          var infowindow = new google.maps.InfoWindow();
+          var bounds = new google.maps.LatLngBounds();
+
+          resp.data.forEach((el, i) => {
+            const location = JSON.parse(el.location);
+
+            console.log(bounds)
+            map.setCenter(location.lat, location.long);
+            map.setZoom(10)
+            map.addMarker({
+              lat: location.lat,
+              lng: location.long,
+              title: location.address,
+              click: function(e) {
+                displayLocation(position.coords.lat,position.coords.long)
+              }
+            });
+          });
         } else {
           heading = "Warning"
           text = "Data Not Found"

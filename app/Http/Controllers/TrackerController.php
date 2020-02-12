@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Tracker;
 use App\Delivery;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TrackerController extends Controller
 {
@@ -107,5 +108,31 @@ class TrackerController extends Controller
       'data' => $data,
       'status' => 200
     ]);
+  }
+
+  public function search() {
+    $data = DB::select(
+      DB::raw("
+        SELECT * 
+        FROM trackers 
+        WHERE created_at 
+        IN (SELECT MAX(created_at) FROM trackers GROUP BY user_id)
+      ")
+    );
+    
+    return response()->json([
+      'data' => $data,
+      'status' => 200
+    ]);
+  }
+
+  public function history() {
+    $trackers = Tracker::with("driver")->orderBy("created_at", "DESC")->get();
+
+    return view('pages.history.index')->with(
+      compact([
+        'trackers'
+      ])
+    );
   }
 }

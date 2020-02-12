@@ -75,7 +75,7 @@
 </div>
 <footer class="app-footer">
   <div>
-    <span>&copy; 2019 <a href="https://github.com/RindangRamadhan">RindangRamadhan </a></span>
+    <span>&copy; 2019</span>
   </div>
   <!-- <div class="ml-auto">
     <span>Powered by</span>
